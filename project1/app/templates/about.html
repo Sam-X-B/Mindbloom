@@ -1,0 +1,127 @@
+<!-- templates/about.html -->
+{% extends "layout.html" %}
+
+{% block title %}About MindBloom{% endblock %}
+
+{% block content %}
+<div class="about-page">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <h1 class="text-center mb-4">About MindBloom</h1>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="card-title"><i class="fas fa-info-circle text-primary me-2"></i>Project Overview</h2>
+          <p class="card-text">
+            MindBloom is an educational project designed to demonstrate web development skills and mental health awareness concepts.
+            This platform is not intended for actual medical use but serves as a learning tool for developers and students.
+          </p>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="card-title"><i class="fas fa-graduation-cap text-success me-2"></i>Educational Purpose</h2>
+          <p class="card-text">
+            This project was created to:
+          </p>
+          <ul>
+            <li>Showcase full-stack development capabilities</li>
+            <li>Demonstrate clean UI/UX design principles</li>
+            <li>Implement modern web technologies</li>
+            <li>Raise awareness about mental health topics</li>
+            <li>Serve as a portfolio piece for educational purposes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="card-title"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Important Disclaimer</h2>
+          <p class="card-text">
+            <strong>MindBloom is not a substitute for professional medical advice, diagnosis, or treatment.</strong>
+            Always seek the advice of your physician or qualified mental health provider with any questions you may have regarding a medical condition.
+          </p>
+          <p class="card-text">
+            The content provided on this platform is for educational purposes only and should not be considered medical advice.
+          </p>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="card-title"><i class="fas fa-code text-info me-2"></i>Technical Information</h2>
+          <p class="card-text">
+            This project was built using:
+          </p>
+          <ul>
+            <li>Python with Flask framework</li>
+            <li>Bootstrap 5 for responsive design</li>
+            <li>Font Awesome for icons</li>
+            <li>HTML5/CSS3/JavaScript</li>
+          </ul>
+          <p class="card-text">
+            The source code may be available for educational reference (if applicable).
+          </p>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-4">
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <h1 class="display-4 mb-3">Get In Touch</h1>
+                <p class="lead">I'd love to hear your feedback, questions, or collaboration ideas!</p>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                            <i class="fas fa-envelope fa-lg text-primary"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-1">Email</h3>
+                            <a href="mailto:berrysamoo47@gmail.com" class="text-decoration-none">
+                                <span class="text-break">berrysamoo47@gmail.com</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-dark bg-opacity-10 p-3 rounded-circle me-3">
+                            <i class="fab fa-github fa-lg text-dark"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-1">GitHub</h3>
+                            <a href="https://github.com/Sam-X-B" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                                @Sam-X-B
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        More platforms may be added in the future. Feel free to reach out via email for now!
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="text-muted">I typically respond within 24-48 hours.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="text-center mt-4">
+        <a href="/" class="btn btn-primary">
+          <i class="fas fa-home me-2"></i>Return to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

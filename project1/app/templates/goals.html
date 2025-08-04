@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1 class="mb-3">Your Goals</h1>
+
+  {# flash messages #}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {# add‐goal form #}
+  <div class="card mb-4">
+    <div class="card-body">
+      <form method="post" action="{{ url_for('goals.goals') }}" novalidate>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <label for="title">Title</label>
+            <input name="title" type="text" class="form-control" id="title" required>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="target_date">Target Date</label>
+            <input name="target_date" type="date" class="form-control" id="target_date">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="status">Status</label>
+            <select name="status" class="form-control" id="status">
+              <option value="open" selected>Open</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Description (optional)</label>
+          <textarea name="description" class="form-control" id="description" rows="2"></textarea>
+        </div><br>
+        <button class="btn btn-primary" type="submit">Add Goal</button>
+      </form>
+    </div>
+  </div>
+
+  {# stats & suggestions #}
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <h5>Stats</h5>
+      <ul class="list-group">
+        <li class="list-group-item">Total goals: {{ stats.total_goals }}</li>
+        <li class="list-group-item">Completed: {{ stats.completed }}</li>
+        <li class="list-group-item">In Progress: {{ stats.in_progress }}</li>
+        <li class="list-group-item">Open: {{ stats.open }}</li>
+         <li class="list-group-item {% if stats.past_due %}text-danger{% endif %}">  <!-- Add this line -->
+            Past Due: {{ stats.past_due }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h5>Suggestions</h5>
+      <ul class="list-group">
+        {% for tip in suggestions %}
+          <li class="list-group-item">{{ tip }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  {# goals list #}
+  <ul class="list-group mb-4">
+    {% for goal in goals %}
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-1">{{ goal.title }}</h5>
+          <span class="badge badge-pill
+            {% if goal.status == 'completed'   %}badge-success
+            {% elif goal.status == 'in_progress' %}badge-warning
+            {% else %}badge-secondary{% endif %}">
+            {{ goal.status.replace('_',' ').title() }}
+          </span>
+        </div>
+        {% if goal.target_date %}
+          <small class="text-muted">Target: {{ goal.target_date }}</small>
+        {% endif %}
+        {% if goal.description %}
+          <p class="mt-2 mb-2">{{ goal.description }}</p>
+        {% endif %}
+        <div class="progress">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            data-completion="{{ goal.progress_percent }}"
+            style="width: 0"
+            aria-valuemin="0"
+            aria-valuemax="100">
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {# chart canvas #}
+  <div class="card">
+    <div class="card-body">
+      <canvas id="goalChart"></canvas>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // animate progress bars
+    document.querySelectorAll('.progress-bar').forEach(el => {
+      const pct = el.dataset.completion;
+      el.style.width = pct + '%';
+      el.setAttribute('aria-valuenow', pct);
+    });
+
+    // render bar chart
+    const ctx = document.getElementById('goalChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {{ goals|map(attribute='title')|list|tojson }},
+        datasets: [{
+          label: 'Completion %',
+          data: {{ goals|map(attribute='progress_percent')|list|tojson }},
+          backgroundColor: {{ colors|tojson }}
+        }]
+      },
+      options: {
+        scales: { y: { beginAtZero: true, max: 100 } },
+        plugins: { legend: { display: false } }
+      }
+    });
+    // Add after DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.progress-bar').forEach(el => {
+        const pct = el.dataset.completion;
+        el.style.width = pct + '%';
+    });
+});
+
+  </script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set minimum date to today
+    const dateInput = document.getElementById('target_date');
+    if (dateInput) {
+        dateInput.min = new Date().toISOString().split('T')[0];
+    }
+
+    // Highlight past due goals
+    document.querySelectorAll('.list-group-item').forEach(card => {
+        if (card.dataset.pastDue === 'true') {
+            card.classList.add('past-due');
+        }
+    });
+});
+</script>
+{% endblock %}
+

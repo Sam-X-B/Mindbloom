@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+
+{% block title %}Help Center{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">
+                        <i class="fas fa-question-circle me-2"></i>Help Center
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <!-- Search Box -->
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search help articles...">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Help Sections -->
+                    <div class="accordion" id="helpAccordion">
+                        <!-- Getting Started -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#gettingStarted">
+                                    <i class="fas fa-rocket me-2 text-primary"></i> Getting Started
+                                </button>
+                            </h2>
+                            <div id="gettingStarted" class="accordion-collapse collapse show" data-bs-parent="#helpAccordion">
+                                <div class="accordion-body">
+                                    <h5>Welcome to MindBloom!</h5>
+                                    <ol>
+                                        <li>Create your account</li>
+                                        <li>Set up your profile</li>
+                                        <li>Start journaling or tracking your mood</li>
+                                    </ol>
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-lightbulb me-2"></i>
+                                        Pro Tip: Try completing your first journal entry today!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Journal Help -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#journalHelp">
+                                    <i class="fas fa-book me-2 text-success"></i> Journal Guide
+                                </button>
+                            </h2>
+                            <div id="journalHelp" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                                <div class="accordion-body">
+                                    <h5>How to use the journal:</h5>
+                                    <ul>
+                                        <li>Click "New Entry" to start writing</li>
+                                        <li>Add tags to organize your thoughts</li>
+                                        <li>Use the mood selector to track emotions</li>
+                                    </ul>
+                                    <img src="{{ url_for('static', filename='images/journal-demo.png') }}" alt="Journal screenshot" class="img-fluid rounded border mb-3">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mood Tracking -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#moodHelp">
+                                    <i class="fas fa-smile me-2 text-warning"></i> Mood Tracking
+                                </button>
+                            </h2>
+                            <div id="moodHelp" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                                <div class="accordion-body">
+                                    <h5>Tracking your emotional health:</h5>
+                                    <p>Our mood tracker helps you visualize patterns in your emotional wellbeing.</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <h6><i class="fas fa-chart-line me-2"></i>View Trends</h6>
+                                                    <p>See weekly/monthly patterns in your mood</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <h6><i class="fas fa-comment me-2"></i>Add Reflections</h6>
+                                                    <p>Note what influenced your mood each day</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Support -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contactSupport">
+                                    <i class="fas fa-headset me-2 text-danger"></i> Contact Support
+                                </button>
+                            </h2>
+                            <div id="contactSupport" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                                <div class="accordion-body">
+                                    <h5>Need more help?</h5>
+                                    <div class="mb-3">
+                                        <a href="#" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                                            <i class="fas fa-comment-dots me-1"></i> Send Feedback
+                                        </a>
+                                        <a href="mailto:berrysamoo47@gmail.com" class="btn btn-outline-secondary">
+                                            <i class="fas fa-envelope me-1"></i> Email Us
+                                        </a>
+                                    </div>
+                                    <p class="text-muted small">Typical response time: 24-48 hours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

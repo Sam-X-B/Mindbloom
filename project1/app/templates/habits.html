@@ -1,0 +1,338 @@
+{% extends "layout.html" %}
+
+{% block title %}Habits – MindBloom{% endblock %}
+
+{% block head %}
+  <style>
+    /* Container */
+    .habits-container {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* "Add Habit" form */
+    .habit-form {
+      background: #ffffff;
+      padding: 1.75rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+    .habit-form legend {
+      font-size: 1.2rem;
+      color: #3B5A5F;
+      margin-bottom: 1rem;
+    }
+    .habit-form .form-control,
+    .habit-form .form-select {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #CCCCCC;
+      padding: 0.6rem 0.75rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+      font-size: 1rem;
+    }
+    .habit-form .form-control:focus,
+    .habit-form .form-select:focus {
+      outline: none;
+      border-color: #5F72BE;
+    }
+    .habit-form .days-of-week {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .habit-form .days-of-week label {
+      flex: 1 0 30%;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    .habit-form .btn-success {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 6px;
+    }
+
+    /* Habit cards - RESTORED ORIGINAL STYLING */
+    .habit-list {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .habit-card {
+      background: #FAFAFA;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .habit-card .info {
+      flex: 1;
+    }
+    .habit-card .info h6 {
+      margin: 0;
+      color: #3B5A5F;
+      font-weight: 500;
+    }
+    .habit-card .info small {
+      color: #777777;
+      font-size: 0.85rem;
+    }
+    .habit-card .progress-bar {
+      height: 8px;
+      background: #E0E0E0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .habit-card .progress {
+      height: 100%;
+      background: #5F72BE;
+      transition: width 0.3s ease;
+    }
+    .habit-card .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .habit-card .actions .btn {
+      min-width: 40px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    /* Habits statistics */
+    .habit-stats table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .habit-stats th,
+    .habit-stats td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #E5E5E5;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .habit-stats tbody tr:nth-child(even) {
+      background: #FFFFFF;
+    }
+    .habit-stats tbody tr:nth-child(odd) {
+      background: #FAFAFA;
+    }
+
+    /* Suggestions */
+    .habit-suggestions {
+      background: #FFFFFF;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      margin-top: 2rem;
+    }
+    .habit-suggestions h5 {
+      color: #3B5A5F;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .habit-suggestions ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .habit-suggestions li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #EEE;
+      font-size: 0.95rem;
+    }
+    .habit-suggestions li:last-child {
+      border-bottom: none;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="habits-container">
+  <h2 class="mb-4">🛠️ Build Good Habits</h2>
+
+  <!-- Add New Habit Form -->
+  <form method="POST" action="{{ url_for('habits.habits') }}" class="habit-form">
+    <fieldset>
+      <legend>Create a New Habit</legend>
+      <input type="text"
+             name="name"
+             class="form-control"
+             placeholder="Habit name (e.g., 'Morning Run')"
+             required>
+
+      <select name="category" class="form-select">
+        <option value="" selected disabled>Choose category</option>
+        <option value="Health">Health</option>
+        <option value="Productivity">Productivity</option>
+        <option value="Mindfulness">Mindfulness</option>
+        <option value="Learning">Learning</option>
+      </select>
+
+      <label>Repeat on:</label>
+      <div class="days-of-week">
+        {% for d in ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] %}
+          <label>
+            <input type="checkbox" name="days" value="{{ d }}">
+            {{ d }}
+          </label>
+        {% endfor %}
+      </div>
+
+      <button type="submit" class="btn btn-success">Add Habit</button>
+    </fieldset>
+  </form>
+
+  <!-- Active Habits List - CARDS RESTORED TO ORIGINAL STYLE -->
+  <section class="habit-list">
+    {% for habit in habits %}
+    <div class="habit-card">
+      <div class="info">
+        <h6>{{ habit.name }}</h6>
+        <small>
+          Streak: {{ habit.streak }} day{{ 's' if habit.streak != 1 }} •
+          {{ habit.category or 'No category' }}
+        </small>
+        <div class="progress-bar">
+          <div class="progress" style="width: {{ habit.completion }}%;"></div>
+        </div>
+      </div>
+      <div class="actions">
+        <form method="POST" action="{{ url_for('habits.mark_done', habit_id=habit.id) }}">
+          <button type="submit"
+                  class="btn btn-outline-primary btn-sm"
+                  title="Mark done today">
+            <i class="fa-regular fa-circle-check"></i>
+          </button>
+        </form>
+        <button class="btn btn-outline-secondary btn-sm edit-habit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#editHabitModal"
+                data-habit-id="{{ habit.id }}"
+                data-habit-name="{{ habit.name }}"
+                data-habit-category="{{ habit.category }}"
+                title="Edit habit">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+      </div>
+    </div>
+    {% else %}
+    <p>No habits yet. Start by adding one above!</p>
+    {% endfor %}
+  </section>
+
+  <!-- Habit Statistics -->
+  <section class="habit-stats">
+    <h5>Weekly Overview</h5>
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Count</th><th>Change</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Habits Completed</td>
+          <td>{{ stats.completed }}</td>
+          <td>{{ stats.trend.completed }}</td>
+        </tr>
+        <tr>
+          <td>Average Daily</td>
+          <td>{{ stats.average_daily }}</td>
+          <td>{{ stats.trend.average_daily }}</td>
+        </tr>
+        <tr>
+          <td>Longest Streak</td>
+          <td>{{ stats.longest_streak }} day{{ 's' if stats.longest_streak != 1 }}</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Suggested Habits -->
+  <section class="habit-suggestions">
+    <h5>Habit Suggestions</h5>
+    <ul>
+      {% for suggestion in suggestions %}
+        <li>{{ suggestion }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+
+<!-- Edit Habit Modal (Bootstrap 5) -->
+<div class="modal fade" id="editHabitModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Habit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" action="{{ url_for('habits.edit_habit') }}">
+        <div class="modal-body">
+          <input type="hidden" name="habit_id" id="editHabitId">
+          <div class="mb-3">
+            <label class="form-label">Habit Name</label>
+            <input type="text" class="form-control" name="name" id="editHabitName" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select class="form-select" name="category" id="editHabitCategory">
+              <option value="">No category</option>
+              <option value="Health">Health</option>
+              <option value="Productivity">Productivity</option>
+              <option value="Mindfulness">Mindfulness</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize modal with data
+    const editModal = document.getElementById('editHabitModal');
+    if (editModal) {
+        editModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            document.getElementById('editHabitId').value = button.dataset.habitId;
+            document.getElementById('editHabitName').value = button.dataset.habitName;
+
+            // Set selected category
+            const categorySelect = document.getElementById('editHabitCategory');
+            const category = button.dataset.habitCategory || '';
+            Array.from(categorySelect.options).forEach(option => {
+                option.selected = option.value === category;
+            });
+        });
+    }
+
+    // Form validation
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+});
+</script>
+{% endblock %}

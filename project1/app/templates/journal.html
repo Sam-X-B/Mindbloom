@@ -1,0 +1,46 @@
+<!-- templates/journal.html -->
+{% extends "layout.html" %}
+
+{% block title %}Journal – MindBloom{% endblock %}
+
+{% block content %}
+  <h2 class="text-success mb-4">📝 Daily Journal</h2>
+<form action="{{ url_for('journal.journal') }}" method="POST" class="bg-light p-4 rounded shadow-sm mb-4">
+    <div class="mb-3">
+      <input type="text" name="title" class="form-control" placeholder="Entry Title (optional)">
+    </div>
+    <div class="mb-3">
+      <textarea name="content" class="form-control" rows="5" placeholder="Write your thoughts..." required></textarea>
+    </div>
+    <div class="mb-3">
+      <input type="text" name="tags" class="form-control" placeholder="Tags (e.g. gratitude, stress)">
+    </div>
+    <div class="mb-3">
+      <select name="mood" class="form-select">
+        <option value="">Select your mood</option>
+        <option value="😊">😊 Happy</option>
+        <option value="😟">😟 Stressed</option>
+        <option value="😐">😐 Neutral</option>
+        <option value="😄">😄 Excited</option>
+        <option value="😴">😴 Tired</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Save Entry</button>
+  </form>
+
+  <h4 class="mt-5 text-success">📚 Previous Entries</h4>
+  {% for entry in entries %}
+    <div class="card border-success mb-3 shadow-sm">
+      <div class="card-header fw-semibold">
+        {{ entry.title or "Untitled" }} {{ entry.mood }}
+        <span class="text-muted float-end">{{ entry.date }}</span>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{ entry.content }}</p>
+        <small class="text-muted">Tags: {{ entry.tags }}</small>
+      </div>
+    </div>
+  {% else %}
+    <p class="text-muted">No entries yet. Start writing above!</p>
+  {% endfor %}
+{% endblock %}

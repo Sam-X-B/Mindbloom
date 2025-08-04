@@ -1,0 +1,263 @@
+<!-- templates/mood.html -->
+{% extends "layout.html" %}
+
+{% block title %}Mood Tracker – MindBloom{% endblock %}
+
+{% block head %}
+  <style>
+    /* Container */
+    .mood-logger {
+      max-width: 720px;
+      margin: 1.5rem auto;
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Section headings */
+    .mood-logger legend,
+    .mt-reflection label,
+    .mt-question h5,
+    .mt-question p,
+    .affirmation h5,
+    section.mb-4 h5 {
+      color: #3B5A5F;
+      font-weight: 500;
+    }
+
+    /* Mood choices grid */
+    .mood-choices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .mood-choices label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .mood-choices input {
+      display: none;
+    }
+    .mood-choices span {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+      border-radius: 50%;
+      background: #f0f0f0;
+      transition: background 0.2s, color 0.2s;
+      margin-bottom: 0.5rem;
+    }
+    .mood-choices input:checked + span {
+      background: #5F72BE;
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transform: scale(1.1);
+    }
+
+    /* Textareas */
+    .mood-logger textarea,
+    .mt-question textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #CCCCCC;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      resize: vertical;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .mood-logger textarea:focus,
+    .mt-question textarea:focus {
+      outline: none;
+      border-color: #5F72BE;
+    }
+
+    /* Buttons */
+    .mood-logger .btn {
+      min-width: 100px;
+      margin-right: 0.5rem;
+    }
+    .mood-logger .btn-success {
+      background-color: #5F72BE;
+      border-color: #5F72BE;
+    }
+    .mood-logger .btn-success:hover {
+      background-color: #4a5a9b;
+      border-color: #4a5a9b;
+    }
+
+    /* Affirmation */
+    .affirmation {
+      max-width: 720px;
+      margin: 1rem auto;
+      padding: 1rem 1.5rem;
+      background: #F0F4FF;
+      border-left: 4px solid #5F72BE;
+      border-radius: 6px;
+      font-style: italic;
+      color: #3B5A5F;
+    }
+
+    /* Outlook & Insights sections */
+    section.mb-4 {
+      max-width: 720px;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      background: #FFFFFF;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    section.mb-4 p {
+      margin-bottom: 1rem;
+    }
+    section.mb-4 .btn-outline-secondary {
+      color: #5F72BE;
+      border-color: #5F72BE;
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+    }
+    section.mb-4 .btn-outline-secondary:hover {
+      background: #5F72BE;
+      color: #FFFFFF;
+    }
+
+    /* Insights table */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .table th,
+    .table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #e5e5e5;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .table tbody tr:nth-child(even) {
+      background: #FAFAFA;
+    }
+
+    /* Daily question */
+    .mt-question {
+      max-width: 720px;
+      margin: 2rem auto 3rem;
+      padding: 1.5rem;
+      background: #FFFFFF;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    .mt-question p {
+      margin-bottom: 1rem;
+      color: #555;
+    }
+    .mt-question .btn-outline-primary {
+      color: #5F72BE;
+      border-color: #5F72BE;
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+    }
+    .mt-question .btn-outline-primary:hover {
+      background: #5F72BE;
+      color: #FFFFFF;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h2 class="text-success mb-4">🧠 Mood Tracker</h2>
+
+  <form method="POST" action="{{ url_for('mood.mood') }}" class="mood-logger">
+    <fieldset>
+      <legend>How are you feeling today?</legend>
+      <div class="mood-choices">
+        <label><input type="radio" name="mood" value="😊" required><span>😊</span><small>Happy</small></label>
+        <label><input type="radio" name="mood" value="😐"><span>😐</span><small>Neutral</small></label>
+        <label><input type="radio" name="mood" value="😢"><span>😢</span><small>Sad</small></label>
+        <label><input type="radio" name="mood" value="😡"><span>😡</span><small>Angry</small></label>
+        <label><input type="radio" name="mood" value="😴"><span>😴</span><small>Tired</small></label>
+      </div>
+    </fieldset>
+
+    <div class="mb-3">
+      <label for="notes" class="form-label">Any thoughts or events today?</label>
+      <textarea name="notes" id="notes" rows="3" placeholder="Optional notes..."></textarea>
+    </div>
+
+    <fieldset class="mb-3">
+      <legend>Possible Triggers</legend>
+      <label><input type="checkbox" name="tags" value="Work"> Work</label>
+      <label><input type="checkbox" name="tags" value="Sleep"> Sleep</label>
+      <label><input type="checkbox" name="tags" value="Relationships"> Relationships</label>
+      <label><input type="checkbox" name="tags" value="Weather"> Weather</label>
+    </fieldset>
+
+    <div class="mt-reflection">
+      <label for="reflection" class="form-label">Reflection – What helped you feel better?</label>
+      <textarea name="reflection" id="reflection" rows="2" placeholder="Your reflection..."></textarea>
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="button" class="btn btn-secondary"
+        onclick="document.getElementById('reflection').value=''">Skip</button>
+    </div>
+  </form>
+
+  {% if affirmation %}
+    <div class="affirmation">
+      <h5>Affirmation</h5>
+      <p>“{{ affirmation }}”</p>
+    </div>
+  {% endif %}
+
+  <section class="mb-4">
+    <h5>Tomorrow’s Outlook</h5>
+    <p>Based on recent patterns, you’ll likely feel calm and centered.</p>
+    <a href="#" class="btn btn-outline-secondary">How to Prepare</a>
+  </section>
+
+  <section class="mb-4">
+    <h5>Insights</h5>
+    <table class="table">
+      <thead>
+        <tr><th>Metric</th><th>This Week</th><th>Trend</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Average Mood</td>
+          <td>😊 {{ insights.average }} / 5</td>
+          <td>↗️</td>
+        </tr>
+        <tr>
+          <td>Most Common Mood</td>
+          <td>{{ insights.common }}</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Logging Streak</td>
+          <td>{{ insights.streak }} days</td>
+          <td>↔️</td>
+        </tr>
+        <tr>
+          <td>Reflections</td>
+          <td>{{ insights.reflections }}</td>
+          <td>↗️</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="mt-question mb-5">
+    <h5>Daily Question</h5>
+    <p>{{ daily_question }}</p>
+    <textarea rows="2" placeholder="Your answer..."></textarea>
+    <button class="btn btn-outline-primary">Remind me later</button>
+  </section>
+{% endblock %}

@@ -1,0 +1,32 @@
+<div class="modal fade" id="feedbackModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-comment-dots me-2"></i>Send Feedback
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="POST" action="{{ url_for('main.feedback') }}">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select class="form-select" name="category">
+              <option value="general">General Feedback</option>
+              <option value="bug">Bug Report</option>
+              <option value="suggestion">Feature Suggestion</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Your Feedback</label>
+            <textarea class="form-control" name="message" rows="5" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

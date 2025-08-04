@@ -1,0 +1,129 @@
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="settingsModalLabel">
+          <i class="fa-solid fa-sliders me-2"></i>App Settings
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Tab Navigation - Fixed structure -->
+        <ul class="nav nav-tabs mb-4" id="settingsTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="account-tab" data-bs-toggle="tab"
+                    data-bs-target="#account" type="button" role="tab"
+                    aria-controls="account" aria-selected="true">
+              <i class="fa-solid fa-user me-2"></i>Account
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="notifications-tab" data-bs-toggle="tab"
+                    data-bs-target="#notifications" type="button" role="tab"
+                    aria-controls="notifications" aria-selected="false">
+              <i class="fa-solid fa-bell me-2"></i>Notifications
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="privacy-tab" data-bs-toggle="tab"
+                    data-bs-target="#privacy" type="button" role="tab"
+                    aria-controls="privacy" aria-selected="false">
+              <i class="fa-solid fa-shield me-2"></i>Privacy
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="theme-tab" data-bs-toggle="tab"
+                    data-bs-target="#theme" type="button" role="tab"
+                    aria-controls="theme" aria-selected="false">
+              <i class="fa-solid fa-palette me-2"></i>Theme
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="settingsContent">
+          <!-- Account Settings -->
+          <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+            <!-- Your existing account form -->
+          </div>
+
+          <!-- Notification Settings -->
+          <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+            <!-- Your existing notifications form -->
+          </div>
+
+          <!-- Privacy Settings -->
+          <div class="tab-pane fade" id="privacy" role="tabpanel" aria-labelledby="privacy-tab">
+            <!-- Your existing privacy form -->
+          </div>
+
+          <!-- Theme Settings -->
+          <div class="tab-pane fade" id="theme" role="tabpanel" aria-labelledby="theme-tab">
+            <!-- Your existing theme form -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .color-dot {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #dee2e6;
+    cursor: pointer;
+  }
+
+  .form-check-input:checked + label .color-dot {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #0d6efd;
+  }
+
+  .bg-blue { background-color: #0d6efd; }
+  .bg-green { background-color: #198754; }
+  .bg-purple { background-color: #6f42c1; }
+  .bg-orange { background-color: #fd7e14; }
+
+  /* Ensure tabs are clickable */
+  .nav-tabs .nav-link {
+    cursor: pointer;
+  }
+</style>
+
+<script>
+// Combined and optimized initialization script
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize all Bootstrap components
+  if (typeof bootstrap !== 'undefined') {
+    // Initialize modals
+    var modalEl = document.getElementById('settingsModal');
+    if (modalEl) {
+      var modal = new bootstrap.Modal(modalEl);
+    }
+
+    // Initialize tabs
+    var tabTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tab"]'));
+    tabTriggerList.map(function(tabTriggerEl) {
+      return new bootstrap.Tab(tabTriggerEl);
+    });
+
+    // Theme selector handler
+    var themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) {
+      themeSelect.addEventListener('change', function() {
+        document.body.classList.remove('dark-mode', 'light-mode');
+        if(this.value === 'dark') {
+          document.body.classList.add('dark-mode');
+        } else if(this.value === 'light') {
+          document.body.classList.add('light-mode');
+        }
+      });
+    }
+  } else {
+    console.error('Bootstrap JS not loaded!');
+  }
+});
+</script>
