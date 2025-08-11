@@ -1,70 +1,155 @@
-# Mindbloom
-Mobile Diary Project
-This is Mindloom, a diary-like project that allows you to record, plan, and manage your day, wherever you are.
-it is made of HTML, CSS, BOOTSTRAP, JS, SQLITE DB AND PYTHON(FLASK).
-it is composed of several files in several folders as explained below.
+MindBloom – Your Personal Mental Wellness Companion
+MindBloom is a thoughtfully designed, mobile-friendly web app that empowers users to manage and enhance their mental wellness on the go. Whether you’re jotting down thoughts in your journal, tracking your daily mood, building healthy habits, or setting personal goals, MindBloom offers a safe and supportive digital space to help you reflect, grow, and thrive.
 
-Mindbloom contains a home page that introduces the app and explains its navigation.
-log in and register that allows you to have and access your account so that you may use/access the following.
-journal page allowing you to enter and store your ideas.
-Mood Tracker page allowing you to track your mood, what triggers it,offering you insights,an affirmation, tomorrow's outlook and a daily question.
-Habits page enabling you to write down your habits, edit, store, track,  and get a weekly overview of them. With suggestions of habits to adopt.
-Goals page allowing you to set goals, track progress and get stats of all your goals and also suggestions provided.
-Affirmations page with a daily affirmation(text and audio), allowing you to reflect on it and also add your own affirmations.
-About page with all basic info for the users and visitors of the app.
-and finally for the frontend comes a drop down that allows you to access various settings including account, notifications, privacy and theme-related related via a modal,toggle dark mode,access help center,send feedback,edit profile,change password and logout.
+🔗 Live Demo: Visit MindBloom on PythonAnywhere
 
-for the backend 
-The app has files and folders that manage sessions, migrations, working environment, configuration(py) and app folder having the following:
-affirmations,auth,goals,habits, and journal each one havung __init__.py and routes.py that manages the operations of their respective pages and route.
-and a main folder to handle home page and the routes for about,settings,homepage,feedbackand their respective operations.
-Then a static folder holding the general css for the app.
-Templates folder holding the about,goals,affirmations,habits,help,index,journal,layout,login,mood and register HTML files and modals folder holding feedback and settings html modals.
-__init.py and Models.py to create and manage the whole app.
-And the app uses a sqlite database with the following: 
-users
-Fields: id, username, email, password_hash, display_name, email_visible, theme_preference, etc.
+🛠️ Built With
+Frontend: HTML, CSS, JavaScript, Bootstrap
 
-Description: Stores user credentials, preferences, and notification settings.
+Backend: Python (Flask)
+
+Database: SQLite
+
+Security: CSRF Protection, Password Hashing for secure login and data handling
+
+✨ Key Features
+🏠 Home Page
+The home dashboard gives users a warm welcome and introduces each feature in a user-friendly way, helping them navigate the app smoothly.
+
+🔐 User Authentication
+Users can register and log in securely. They can also manage their accounts, including changing passwords, editing profiles, and toggling between light/dark themes—all from a clean dropdown modal.
+
+📓 Daily Journal
+A space to capture your thoughts, ideas, or reflections.
+
+Add optional titles, tags, and moods
+
+Browse previous entries chronologically
+
+Great for mental clarity, creativity, and stress relief
+
+😊 Mood Tracker
+Track how you're feeling each day with:
+
+Simple mood selection (e.g., Happy, Sad, Tired)
+
+Space to describe events or triggers
+
+Reflection prompts to deepen awareness
+
+Visual stats including trends and mood streaks
+
+Daily affirmation and outlook for tomorrow
+
+🔁 Habit Tracker
+Form and maintain healthy habits using:
+
+Custom habit creation with categories and frequencies
+
+Visual progress tracking and streaks
+
+Weekly performance summary
+
+Built-in habit suggestions to inspire consistency
+
+🎯 Goal Setting
+Define your goals and keep track of them effortlessly:
+
+Add goals with due dates and status tracking (Open, In Progress, Past Due)
+
+Progress bar and stats overview
+
+Suggestions like “Run a 10K” or “Start a journaling habit” to keep you moving forward
+
+💬 Daily Affirmations
+Read or listen to uplifting affirmations to shift your mindset:
+
+One provided daily
+
+Option to add your own personal affirmations
+
+Reflect on what resonates with you
+
+ℹ️ About Page
+Provides details about the app’s purpose, the mental wellness philosophy behind it, and ways to get in touch for feedback or collaboration.
+
+⚙️ App Settings & Help Center
+A modal lets users access:
+
+Account details
+
+Privacy and theme settings
+
+Notifications
+
+Help documentation
+
+Send feedback directly via a feedback form
+
+🧠 Database Structure (SQLite)
+The database is structured to support seamless user experience and secure data handling:
+
+👤 users
+Stores basic user info and preferences.
+Fields: id, username, email, password_hash, display_name, email_visible, theme_preference
 
 📓 journal_entry
+User journal data.
 Fields: id, user_id, title, content, tags, mood, date
 
-Description: Personal journal entries with optional mood and tags.
-
 😊 mood_entry
+Mood tracking log.
 Fields: id, user_id, mood, notes, tags, reflection, timestamp
 
-Description: Daily mood tracking with reflections and notes.
-
 🔁 habit
+User habits definition.
 Fields: id, user_id, name, category, frequency, created_at
 
-Description: Defines recurring habits and their categories.
-
 ✅ habit_log
+Each time a user completes a habit.
 Fields: id, user_id, habit_id, completed_at
 
-Description: Logs each time a habit is completed.
-
 🎯 goal
+Tracks user goals and milestones.
 Fields: id, user_id, title, description, target_date, status, created_at
 
-Description: Tracks personal goals and their progress.
-
 💬 affirmations
+Daily or custom affirmations.
 Fields: id, text, created, user_id
 
-Description: Positive affirmations saved by the user.
-
-feedback
+📝 feedback
+Feedback submitted through the form.
 Fields: id, user_id, message, category, created_at, status
 
-Description: User-submitted feedback or suggestions.
-the app also uses csrf protection,hashed passwords.
+📁 Folder & File Structure
+MindBloom is built with modular Flask architecture. Each feature (journal, mood, goals, habits, affirmations, auth) is handled in separate blueprints with:
 
-link to the web "https://sam0.pythonanywhere.com"
+__init__.py: Initializes the module
 
-Fields: id, user_id, message, category, created_at, status
+routes.py: Manages feature-specific routes
 
-Description: User-submitted feedback or suggestions.
+Other notable folders:
+
+main: Contains routes for homepage, settings, about, and feedback
+
+static: Holds global CSS files
+
+templates: Contains all HTML files including layout and modals
+
+models.py: Defines all database tables
+
+__init__.py (root): Sets up the Flask app, configurations, and database
+
+🔒 Security & Best Practices
+User passwords are hashed using secure algorithms
+
+CSRF protection ensures safe form handling
+
+Private user information is handled with care, with options for display preferences
+
+💡 Final Thoughts
+MindBloom is more than just a planner or tracker—it's a holistic space for reflection, emotional regulation, and personal growth. Built with simplicity and well-being in mind, it's perfect for anyone looking to become more intentional about their mental wellness.
+
+🔗 Try it live now: https://sam0.pythonanywhere.com
+
+Feel free to fork, contribute, or give feedback!
