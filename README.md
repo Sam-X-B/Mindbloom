@@ -1,6 +1,6 @@
 # MindBloom – Your Personal Mental Wellness Companion
 
-#### Video Demo: <YOUR YOUTUBE VIDEO URL HERE>
+#### Video Demo: [<https://youtu.be/I-mDfifnGzY>](https://youtu.be/I-mDfifnGzY)
 
 ## Overview
 MindBloom is a mobile-friendly web application designed to help you take care of your mental wellness in a simple, accessible way. It gives you a space to journal your thoughts, track your mood, build healthy habits, and set personal goals, all in one place. The app is meant to feel safe, private, and supportive, so you can focus on reflection, growth, and overall well-being.
@@ -25,13 +25,13 @@ The homepage welcomes you and gives a clear overview of the app’s main feature
 You can register for an account, log in securely, and manage your profile. There’s also an option to change your password and switch between light and dark themes.
 
 **Daily Journal**  
-A private place to record your thoughts, reflections, or ideas. You can give entries titles, add tags, and note your mood for that day. Past entries are stored chronologically for easy browsing.
+A private place to record your thoughts, reflections, or ideas. You can give entries titles, add tags, and note your mood for that day. Past entries are stored in chronological order for easy browsing.
 
 **Mood Tracker**  
-Each day, you can select your mood, write about what influenced it, and respond to reflection prompts. The app keeps track of trends and streaks, helping you notice changes over time.
+Each day, you can select your mood, write about what influenced it, and respond to reflection prompts. The app tracks trends and streaks, helping you notice changes over time.
 
 **Habit Tracker**  
-Create and track your own habits. You can choose how often you want to do them and check your progress visually. The app also gives you a weekly summary to keep you motivated.
+Create and track your habits. You can choose how often you want to do them and check your progress visually. The app also gives you a weekly summary to keep you motivated.
 
 **Goal Setting**  
 Add your goals, set target dates, and track their progress. Goals can be marked as open, in progress, or past due, and you’ll see a progress bar to help you stay on track.
